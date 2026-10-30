@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* `.dark` on <html> switches the theme (set by the inline script in layout.tsx and the ThemeToggle). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-300: #5eead4;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-brand-800: #115e59;
+  --color-brand-900: #134e4a;
+
+  /* Semantic tokens: they change with the theme, so components never hard-code white / dark text. */
+  --color-surface: #ffffff;
+  --color-brand-ink: #0f766e;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 10px 30px -8px rgb(15 23 42 / 0.25), 0 0 22px -8px var(--glow);
+
+  --animate-fade-in: fade-in 0.15s ease-out;
+  --animate-scale-in: scale-in 0.18s ease-out;
+  --animate-slide-in-right: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-left: slide-in-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-toast-in: toast-in 0.22s ease-out;
+  --animate-glow-pulse: glow-pulse 3.2s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes slide-in-left {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 18px -4px var(--glow);
+    }
+    50% {
+      box-shadow: 0 0 30px -2px var(--glow), 0 0 12px -2px var(--glow-2);
+    }
+  }
+}
+
+/* Neon glow colours: soft in light mode, vivid in dark mode. */
+:root {
+  --glow: rgb(20 184 166 / 0.38);
+  --glow-2: rgb(139 92 246 / 0.3);
+
+  /* Chart series colours (deeper in light mode, neon in dark mode) */
+  --chart-teal: #0d9488;
+  --chart-cyan: #0891b2;
+  --chart-violet: #7c3aed;
+  --chart-amber: #d97706;
+  --chart-rose: #e11d48;
+}
+
+/*
+ * Dark theme = the same Tailwind colour names remapped. The neutral (slate) scale is inverted and the
+ * tinted backgrounds / ring colours of each family become deep, saturated tones, so every existing
+ * `bg-slate-50`, `text-slate-900`, `bg-red-50`… flips automatically. Strong shades (500/600) stay as is
+ * because they carry white text (buttons).
+ */
+.dark {
+  color-scheme: dark;
+  --glow: rgb(45 212 191 / 0.55);
+  --glow-2: rgb(167 139 250 / 0.5);
+
+  --chart-teal: #2dd4bf;
+  --chart-cyan: #22d3ee;
+  --chart-violet: #a78bfa;
+  --chart-amber: #fbbf24;
+  --chart-rose: #fb7185;
+
+  --color-surface: #0d1425;
+  --color-brand-ink: #5eead4;
+
+  --color-slate-50: #070b15;
+  --color-slate-100: #111a2e;
+  --color-slate-200: #1c2842;
+  --color-slate-300: #2d3c5d;
+  --color-slate-400: #6c7b9c;
+  --color-slate-500: #93a1bf;
+  --color-slate-600: #aeb9d1;
+  --color-slate-700: #ccd5e8;
+  --color-slate-800: #e3e9f6;
+  --color-slate-900: #f2f6fd;
+
+  --color-brand-50: #0a2a2d;
+  --color-brand-100: #0d3b3e;
+  --color-brand-200: #11595b;
+
+  --color-red-50: #2b1017;
+  --color-red-100: #3d1220;
+  --color-red-200: #6e1f2e;
+  --color-red-700: #fda4af;
+  --color-red-800: #fecdd3;
+
+  --color-emerald-50: #0a2a20;
+  --color-emerald-100: #0e3b2c;
+  --color-emerald-200: #145a42;
+  --color-emerald-700: #6ee7b7;
+  --color-emerald-800: #a7f3d0;
+
+  --color-amber-50: #2b2209;
+  --color-amber-100: #3b2d0a;
+  --color-amber-200: #5f4811;
+  --color-amber-700: #fcd34d;
+  --color-amber-800: #fde68a;
+
+  --color-violet-50: #1e1638;
+  --color-violet-100: #281d4b;
+  --color-violet-200: #41307d;
+  --color-violet-700: #c4b5fd;
+  --color-violet-800: #ddd6fe;
+
+  --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.015), 0 1px 3px 0 rgb(0 0 0 / 0.55);
+  --shadow-pop: 0 14px 40px -10px rgb(0 0 0 / 0.75), 0 0 26px -6px var(--glow);
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    background-image:
+      radial-gradient(55rem 28rem at 88% -8%, rgb(20 184 166 / 0.07), transparent 65%),
+      radial-gradient(45rem 28rem at -8% 108%, rgb(139 92 246 / 0.06), transparent 65%);
+    background-attachment: fixed;
+  }
+  .dark body {
+    background-image:
+      radial-gradient(55rem 30rem at 88% -8%, rgb(45 212 191 / 0.13), transparent 65%),
+      radial-gradient(45rem 30rem at -8% 108%, rgb(167 139 250 / 0.12), transparent 65%);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+  .dark :focus-visible {
+    outline-color: var(--color-brand-400);
+  }
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-slate-900);
+  }
+  .dark ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: var(--color-slate-300);
+    border-radius: 9999px;
+    border: 2px solid var(--color-slate-50);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Neon glow on chart lines and bars (Recharts renders plain SVG paths). */
+.neon-chart .recharts-area-curve,
+.neon-chart .recharts-line-curve {
+  filter: drop-shadow(0 0 5px var(--glow));
+}
+.neon-chart .recharts-bar-rectangle path {
+  filter: drop-shadow(0 0 6px var(--glow));
+}
+.neon-chart .recharts-cartesian-axis-tick-value {
+  fill: var(--color-slate-500);
+  font-size: 12px;
+}

@@ -1,0 +1,1 @@
+ALTER TABLE "admin_assignments" ADD CONSTRAINT "admin_assignments_area_unique" UNIQUE("area");

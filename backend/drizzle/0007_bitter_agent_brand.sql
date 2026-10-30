@@ -1,0 +1,1 @@
+ALTER TABLE "appointments" ADD COLUMN "checked_fee" numeric(10, 2);
