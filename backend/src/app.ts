@@ -8,16 +8,26 @@ import routes from "./routes";
 
 export const app = express();
 
+// Trust Render's reverse proxy
+app.set("trust proxy", 1);
+
 // Mounted before helmet: Swagger UI needs inline scripts that helmet's default CSP blocks.
 setupSwagger(app);
 
 app.use(helmet());
 app.use(cors());
-// Stripe signs the raw bytes, so this route must be registered before the JSON parser.
-app.post("/api/payments/webhook", express.raw({ type: "application/json" }), paymentController.webhook);
+
+// Stripe webhook must receive raw request bytes
+app.post(
+    "/api/payments/webhook",
+    express.raw({ type: "application/json" }),
+    paymentController.webhook
+);
+
 app.use(express.json({ limit: "100kb" }));
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
+
 app.use("/api", routes);
 
 app.use(notFound);
